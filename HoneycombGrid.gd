@@ -2,6 +2,10 @@ extends TileMap
 
 class_name HoneycombGrid
 
+signal flag_change(number_of_flags)
+signal game_lost
+signal game_won
+
 @export var rows = 8
 @export var columns = 8
 @export var number_of_grubs = 10
@@ -25,6 +29,7 @@ const DEFAULT_LAYER = 0
 
 var cells_with_grubs = []
 var cells_checked_recursively = []
+var is_game_finished = false
 
 func _ready():
 	clear_layer(DEFAULT_LAYER)
@@ -49,7 +54,7 @@ func _input(event: InputEvent):
 
 func on_cell_clicked(cell_coord: Vector2i):
 	if cells_with_grubs.any(func (cell): return cell.x == cell_coord.x && cell.y == cell_coord.y):
-		print("YOU LOSE")
+		lose(cell_coord)
 		return
 	
 	cells_checked_recursively.append(cell_coord)
@@ -110,6 +115,15 @@ func place_grubs():
 
 func set_tile_cell(cell_coord: Vector2, cell_type: String):
 	set_cell(DEFAULT_LAYER, cell_coord, TILE_SET_ID, CELLS[cell_type])
+
+func lose(cell_coord: Vector2i):
+	game_lost.emit()
+	is_game_finished = true
+	
+	for cell in cells_with_grubs:
+		set_tile_cell(cell, "GRUB")
+	
+	set_tile_cell(cell_coord, "SMASHED")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
