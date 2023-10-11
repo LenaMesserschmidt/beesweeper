@@ -32,6 +32,26 @@ func _ready():
 		for j in columns:
 			var cell_coord = Vector2(i - rows / 2, j - columns / 2)
 			set_tile_cell(cell_coord, "DEFAULT")
+	
+	place_grubs()
+
+func _input(event: InputEvent):
+	if !(event is InputEventMouseButton) || event.pressed:
+		return
+	
+	var clicked_cell_coord = local_to_map(get_local_mouse_position())
+	
+	if event.button_index == 1:
+		on_cell_clicked(clicked_cell_coord)
+	elif event.button_index == 2:
+		print("PLACE FLAG")
+
+func on_cell_clicked(cell_coord: Vector2i):
+	if cells_with_grubs.any(func (cell): return cell.x == cell_coord.x && cell.y == cell_coord.y):
+		print("YOU LOSE")
+		return
+	
+	
 
 func place_grubs():
 	for i in number_of_grubs:
