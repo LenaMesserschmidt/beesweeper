@@ -28,6 +28,8 @@ const TILE_SET_ID = 0
 const DEFAULT_LAYER = 0
 
 var cells_with_grubs = []
+var cells_with_flags = []
+var flags_placed = 0
 var cells_checked_recursively = []
 var is_game_finished = false
 
@@ -42,6 +44,9 @@ func _ready():
 	place_grubs()
 
 func _input(event: InputEvent):
+	if is_game_finished:
+		return
+		
 	if !(event is InputEventMouseButton) || event.pressed:
 		return
 	
@@ -50,7 +55,7 @@ func _input(event: InputEvent):
 	if event.button_index == 1:
 		on_cell_clicked(clicked_cell_coord)
 	elif event.button_index == 2:
-		print("PLACE FLAG")
+		place_flag(clicked_cell_coord)
 
 func on_cell_clicked(cell_coord: Vector2i):
 	if cells_with_grubs.any(func (cell): return cell.x == cell_coord.x && cell.y == cell_coord.y):
@@ -124,6 +129,45 @@ func lose(cell_coord: Vector2i):
 		set_tile_cell(cell, "GRUB")
 	
 	set_tile_cell(cell_coord, "SMASHED")
+
+func place_flag(cell_coord: Vector2i):
+	var tile_data = get_cell_tile_data(DEFAULT_LAYER, cell_coord)
+	var atlas_coords = get_cell_atlas_coords(DEFAULT_LAYER, cell_coord)
+	
+	var is_empty_cell = atlas_coords == Vector2i(1,3)
+	var is_flag_cell = atlas_coords == Vector2i(1,2)
+	
+	if !is_empty_cell and !is_flag_cell:
+		return
+	
+	if is_flag_cell:
+		# doesn't this take away the has_grub?
+		set_tile_cell(cell_coord, "DEFAULT")
+		cells_with_flags.erase(cell_coord)
+		flags_placed -= 1
+	
+	elif is_empty_cell:
+		if flags_placed == number_of_grubs:
+			return
+		
+		flags_placed += 1
+		set_tile_cell(cell_coord, "FLAG")
+		cells_with_flags.append(cell_coord)
+	
+	flag_change.emit(flags_placed)
+	
+	var count = 0
+	for flag_cell in cells_with_flags:
+		for grub_cell in cells_with_grubs:
+			if flag_cell.x == grub_cell.x and flag_cell.y == grub_cell.y:
+				count += 1
+	
+	if count == cells_with_grubs.size():
+		win()
+	
+func win():
+	is_game_finished = true
+	game_won.emit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
