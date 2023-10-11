@@ -23,6 +23,8 @@ const CELLS = {
 const TILE_SET_ID = 0
 const DEFAULT_LAYER = 0
 
+var cells_with_grubs = []
+
 func _ready():
 	clear_layer(DEFAULT_LAYER)
 	
@@ -30,6 +32,19 @@ func _ready():
 		for j in columns:
 			var cell_coord = Vector2(i - rows / 2, j - columns / 2)
 			set_tile_cell(cell_coord, "DEFAULT")
+
+func place_grubs():
+	for i in number_of_grubs:
+		var cell_coordinates = Vector2(randi_range(-rows/2, rows/2-1), randi_range(-columns/2, columns/2-1))
+		
+		while cells_with_grubs.has(cell_coordinates):
+			cell_coordinates = Vector2(randi_range(-rows/2, rows/2-1), randi_range(-columns/2, columns/2-1))
+		
+		cells_with_grubs.append(cell_coordinates)
+	
+	for cell in cells_with_grubs:
+		erase_cell(DEFAULT_LAYER, cell)
+		set_cell(DEFAULT_LAYER, cell, TILE_SET_ID, CELLS.DEFAULT, 1)
 
 func set_tile_cell(cell_coord: Vector2, cell_type: String):
 	set_cell(DEFAULT_LAYER, cell_coord, TILE_SET_ID, CELLS[cell_type])
