@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://dsgy08ggtvydp"]
 
-[ext_resource type="Texture2D" uid="uid://brpoln3trytur" path="res://assets/honeycomb_atlas.png" id="1_woghe"]
+[ext_resource type="Texture2D" uid="uid://brpoln3trytur" path="res://assets/honeycomb_atlas.png" id="1_bsdsm"]
 [ext_resource type="Script" path="res://HoneycombGrid.gd" id="2_q5hwi"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ksofg"]
-texture = ExtResource("1_woghe")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex1dh"]
+texture = ExtResource("1_bsdsm")
 margins = Vector2i(4, 4)
 separation = Vector2i(11, 8)
 texture_region_size = Vector2i(73, 64)
@@ -15,29 +15,32 @@ texture_region_size = Vector2i(73, 64)
 1:1/0 = 0
 2:1/0 = 0
 0:2/0 = 0
+1:2/next_alternative_id = 2
 1:2/0 = 0
+1:2/1 = 1
+1:2/1/custom_data_0 = true
 2:2/0 = 0
-0:3/0 = 0
 1:3/next_alternative_id = 2
 1:3/0 = 0
 1:3/1 = 1
 1:3/1/custom_data_0 = true
-2:3/0 = 0
+0:3/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_j3epd"]
+[sub_resource type="TileSet" id="TileSet_5mxiq"]
 tile_shape = 3
 tile_offset_axis = 1
 tile_size = Vector2i(73, 64)
 custom_data_layer_0/name = "has_grub"
 custom_data_layer_0/type = 1
-sources/0 = SubResource("TileSetAtlasSource_ksofg")
+sources/0 = SubResource("TileSetAtlasSource_ex1dh")
 
 [node name="Main" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="HoneycombGrid" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_j3epd")
+position = Vector2(2, 2)
+tile_set = SubResource("TileSet_5mxiq")
 cell_quadrant_size = 64
 format = 2
 script = ExtResource("2_q5hwi")

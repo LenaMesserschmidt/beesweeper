@@ -118,8 +118,8 @@ func place_grubs():
 		erase_cell(DEFAULT_LAYER, cell)
 		set_cell(DEFAULT_LAYER, cell, TILE_SET_ID, CELLS.DEFAULT, 1)
 
-func set_tile_cell(cell_coord: Vector2, cell_type: String):
-	set_cell(DEFAULT_LAYER, cell_coord, TILE_SET_ID, CELLS[cell_type])
+func set_tile_cell(cell_coord: Vector2, cell_type: String, alt: int = 0):
+	set_cell(DEFAULT_LAYER, cell_coord, TILE_SET_ID, CELLS[cell_type], alt)
 
 func lose(cell_coord: Vector2i):
 	game_lost.emit()
@@ -134,6 +134,7 @@ func place_flag(cell_coord: Vector2i):
 	var tile_data = get_cell_tile_data(DEFAULT_LAYER, cell_coord)
 	var atlas_coords = get_cell_atlas_coords(DEFAULT_LAYER, cell_coord)
 	
+	var cell_has_grub = tile_data.get_custom_data("has_grub")
 	var is_empty_cell = atlas_coords == Vector2i(1,3)
 	var is_flag_cell = atlas_coords == Vector2i(1,2)
 	
@@ -142,7 +143,10 @@ func place_flag(cell_coord: Vector2i):
 	
 	if is_flag_cell:
 		# doesn't this take away the has_grub?
-		set_tile_cell(cell_coord, "DEFAULT")
+		if cell_has_grub:
+			set_tile_cell(cell_coord, "DEFAULT", 1)
+		else:
+			set_tile_cell(cell_coord, "DEFAULT")
 		cells_with_flags.erase(cell_coord)
 		flags_placed -= 1
 	
@@ -151,7 +155,10 @@ func place_flag(cell_coord: Vector2i):
 			return
 		
 		flags_placed += 1
-		set_tile_cell(cell_coord, "FLAG")
+		if cell_has_grub:
+			set_tile_cell(cell_coord, "FLAG", 1)
+		else:
+			set_tile_cell(cell_coord, "FLAG")
 		cells_with_flags.append(cell_coord)
 	
 	flag_change.emit(flags_placed)
