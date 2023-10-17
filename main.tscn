@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsgy08ggtvydp"]
+[gd_scene load_steps=7 format=3 uid="uid://dsgy08ggtvydp"]
 
 [ext_resource type="Texture2D" uid="uid://brpoln3trytur" path="res://assets/honeycomb_atlas.png" id="1_bsdsm"]
 [ext_resource type="Script" path="res://HoneycombGrid.gd" id="2_q5hwi"]
+[ext_resource type="PackedScene" uid="uid://b4u3dlvodqagx" path="res://game_state_manager.tscn" id="3_mjwfx"]
+[ext_resource type="PackedScene" uid="uid://dc7b2eksr4r8c" path="res://ui.tscn" id="4_ujh65"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex1dh"]
 texture = ExtResource("1_bsdsm")
@@ -44,3 +46,9 @@ tile_set = SubResource("TileSet_5mxiq")
 cell_quadrant_size = 64
 format = 2
 script = ExtResource("2_q5hwi")
+
+[node name="UI" parent="." instance=ExtResource("4_ujh65")]
+
+[node name="GameStateManager" parent="." node_paths=PackedStringArray("grid", "ui") instance=ExtResource("3_mjwfx")]
+grid = NodePath("../HoneycombGrid")
+ui = NodePath("../UI")
