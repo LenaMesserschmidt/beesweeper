@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsgy08ggtvydp"]
+[gd_scene load_steps=8 format=3 uid="uid://dsgy08ggtvydp"]
 
 [ext_resource type="Texture2D" uid="uid://brpoln3trytur" path="res://assets/honeycomb_atlas.png" id="1_bsdsm"]
 [ext_resource type="Script" path="res://HoneycombGrid.gd" id="2_q5hwi"]
 [ext_resource type="PackedScene" uid="uid://b4u3dlvodqagx" path="res://game_state_manager.tscn" id="3_mjwfx"]
 [ext_resource type="PackedScene" uid="uid://dc7b2eksr4r8c" path="res://ui.tscn" id="4_ujh65"]
+[ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="5_nl4ay"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex1dh"]
 texture = ExtResource("1_bsdsm")
@@ -39,6 +40,15 @@ sources/0 = SubResource("TileSetAtlasSource_ex1dh")
 [node name="Main" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D"]
+custom_minimum_size = Vector2(1600, 1200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_nl4ay")
 
 [node name="HoneycombGrid" type="TileMap" parent="."]
 position = Vector2(2, 2)
