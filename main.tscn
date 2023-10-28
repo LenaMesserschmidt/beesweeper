@@ -51,7 +51,7 @@ grow_vertical = 2
 texture = ExtResource("5_nl4ay")
 
 [node name="HoneycombGrid" type="TileMap" parent="."]
-position = Vector2(2, 2)
+position = Vector2(1, -1)
 tile_set = SubResource("TileSet_5mxiq")
 cell_quadrant_size = 64
 format = 2

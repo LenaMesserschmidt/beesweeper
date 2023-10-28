@@ -42,3 +42,11 @@ func game_lost():
 
 func game_won():
 	game_status_button.texture_normal = game_won_button_texture
+
+
+func _on_settings_button_pressed():
+	print("No settings menu")
+
+
+func _on_new_game_button_pressed():
+	get_tree().reload_current_scene()

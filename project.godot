@@ -24,3 +24,5 @@ window/size/viewport_height=1200
 
 renderer/rendering_method="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+environment/size/viewport_width=800
+environment/size/viewport_height=600
