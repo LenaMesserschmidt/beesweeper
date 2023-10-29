@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=3 uid="uid://7lrkr6vff2vo"]
+
+[ext_resource type="Texture2D" uid="uid://b27pym62466sn" path="res://assets/label_HP_bg.png" id="1_7ow1u"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_tlhn0"]
+[ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="3_6qoec"]
+
+[node name="Menu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tlhn0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("3_6qoec")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Title"
+
+[node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="NewGameButton" type="TextureButton" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+layout_mode = 2
+texture_normal = ExtResource("1_7ow1u")
+
+[node name="NewGameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/NewGameButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -13.0
+offset_right = 42.5
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "New Game"
+
+[node name="SettingsButton" type="TextureButton" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions"]
+layout_mode = 2
+texture_normal = ExtResource("1_7ow1u")
+
+[node name="SettingsLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/SettingsButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -13.0
+offset_right = 31.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Settings"
+
+[node name="Version" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Version 0.1"
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/CenterContainer/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Animation"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/MenuOptions/SettingsButton" to="." method="_on_settings_button_pressed"]
