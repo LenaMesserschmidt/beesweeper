@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://x300tatfo4q3"]
+[gd_scene load_steps=11 format=3 uid="uid://x300tatfo4q3"]
 
 [ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="1_3oadf"]
 [ext_resource type="Texture2D" uid="uid://d3pxd7f3mgm11" path="res://assets/honeycomb_atlas.png" id="2_81eqc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/LevelUI.gd" id="4_5tfux"]
 [ext_resource type="PackedScene" uid="uid://ds2nfpgplfthl" path="res://scenes/game_state_manager.tscn" id="5_qa1fl"]
 [ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="6_uj883"]
+[ext_resource type="PackedScene" uid="uid://br0y6b3yxxkub" path="res://scenes/bee.tscn" id="7_uy08c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y7a3w"]
 texture = ExtResource("2_81eqc")
@@ -37,6 +38,12 @@ tile_size = Vector2i(73, 64)
 custom_data_layer_0/name = "has_grub"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_y7a3w")
+
+[sub_resource type="Curve2D" id="Curve2D_7mavr"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 1600, 8, 0, 0, 0, 0, 1600, 1208, 0, 0, 0, 0, 8, 1216, 0, 0, 0, 0, 0, 8)
+}
+point_count = 5
 
 [node name="LevelContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -74,6 +81,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 script = ExtResource("4_5tfux")
+bee_scene = ExtResource("7_uy08c")
 
 [node name="GrubsCount" type="TextureRect" parent="LevelUI"]
 custom_minimum_size = Vector2(100, 50)
@@ -115,6 +123,17 @@ ui = NodePath("../LevelUI")
 [node name="Timer" type="Timer" parent="GameStateManager"]
 autostart = true
 
+[node name="BeePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_7mavr")
+
+[node name="BeeSpawnLocation" type="PathFollow2D" parent="BeePath"]
+position = Vector2(0, 8)
+
+[node name="BeeTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
 [connection signal="pressed" from="LevelUI/RestartButton" to="LevelUI" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="LevelUI/MenuButton" to="LevelUI" method="_on_menu_button_pressed"]
 [connection signal="timeout" from="GameStateManager/Timer" to="GameStateManager" method="_on_timer_timeout"]
+[connection signal="timeout" from="BeeTimer" to="LevelUI" method="_on_bee_timer_timeout"]
