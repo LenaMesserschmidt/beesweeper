@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dc7b2eksr4r8c"]
+[gd_scene load_steps=9 format=3 uid="uid://dc7b2eksr4r8c"]
 
 [ext_resource type="Script" path="res://ui.gd" id="1_heb1e"]
 [ext_resource type="FontFile" uid="uid://dvsn5r8egkubh" path="res://assets/DS-DIGIB.TTF" id="1_ylyaj"]
+[ext_resource type="PackedScene" uid="uid://bb2kuusdf4ij2" path="res://bee.tscn" id="2_g5n5t"]
 [ext_resource type="Texture2D" uid="uid://cv42xopvpixu4" path="res://assets/button_smile.png" id="2_v8sa8"]
 [ext_resource type="Texture2D" uid="uid://mnfw1gl1ngh3" path="res://assets/button_smile_pressed.png" id="3_lq8x0"]
 
@@ -16,6 +17,7 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_heb1e")
+bee_scene = ExtResource("2_g5n5t")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(2.08165e-12, 80)

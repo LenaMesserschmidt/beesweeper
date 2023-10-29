@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsgy08ggtvydp"]
+[gd_scene load_steps=10 format=3 uid="uid://dsgy08ggtvydp"]
 
 [ext_resource type="Texture2D" uid="uid://brpoln3trytur" path="res://assets/honeycomb_atlas.png" id="1_bsdsm"]
 [ext_resource type="Script" path="res://HoneycombGrid.gd" id="2_q5hwi"]
 [ext_resource type="PackedScene" uid="uid://b4u3dlvodqagx" path="res://game_state_manager.tscn" id="3_mjwfx"]
 [ext_resource type="PackedScene" uid="uid://dc7b2eksr4r8c" path="res://ui.tscn" id="4_ujh65"]
 [ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="5_nl4ay"]
+[ext_resource type="PackedScene" uid="uid://bb2kuusdf4ij2" path="res://bee.tscn" id="6_fc8fv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ex1dh"]
 texture = ExtResource("1_bsdsm")
@@ -37,6 +38,8 @@ custom_data_layer_0/name = "has_grub"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_ex1dh")
 
+[sub_resource type="Curve2D" id="Curve2D_6lbay"]
+
 [node name="Main" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -46,6 +49,10 @@ custom_minimum_size = Vector2(1600, 1200)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -802.0
+offset_top = -598.0
+offset_right = 798.0
+offset_bottom = 602.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_nl4ay")
@@ -60,5 +67,16 @@ script = ExtResource("2_q5hwi")
 [node name="UI" parent="." instance=ExtResource("4_ujh65")]
 
 [node name="GameStateManager" parent="." node_paths=PackedStringArray("grid", "ui") instance=ExtResource("3_mjwfx")]
-grid = NodePath("../HoneycombGrid")
-ui = NodePath("../UI")
+grid = NodePath("")
+ui = NodePath("")
+
+[node name="Bee" parent="." instance=ExtResource("6_fc8fv")]
+
+[node name="BeePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6lbay")
+
+[node name="BeeSpawnLocation" type="PathFollow2D" parent="BeePath"]
+
+[node name="BeeTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="BeeTimer" to="GameStateManager" method="_on_bee_timer_timeout"]

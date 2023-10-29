@@ -2,9 +2,12 @@ extends CanvasLayer
 
 class_name UI
 
+@export var bee_scene: PackedScene
+
 @onready var grub_count_label = %GrubCountLabel
 @onready var timer_label = %TimerLabel
 @onready var game_status_button = %GameStatusButton
+
 
 var game_lost_button_texture = preload("res://assets/button_dead.png")
 var game_won_button_texture = preload("res://assets/button_cleared.png")
@@ -26,7 +29,7 @@ func set_timer_count(timer_count: int):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,3 +53,4 @@ func _on_settings_button_pressed():
 
 func _on_new_game_button_pressed():
 	get_tree().reload_current_scene()
+

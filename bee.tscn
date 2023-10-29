@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://bb2kuusdf4ij2"]
+
+[ext_resource type="Script" path="res://Bee.gd" id="1_shys8"]
+[ext_resource type="Texture2D" uid="uid://y272lom1qqxr" path="res://assets/enemyWalking_1.png" id="2_yldn6"]
+[ext_resource type="Texture2D" uid="uid://xuarv4oqdlvq" path="res://assets/enemyWalking_2.png" id="3_kecm0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xqtj1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yldn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kecm0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xaeep"]
+radius = 46.0
+height = 130.0
+
+[node name="Bee" type="RigidBody2D"]
+script = ExtResource("1_shys8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xqtj1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xaeep")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
