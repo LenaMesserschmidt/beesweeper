@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://x300tatfo4q3"]
+[gd_scene load_steps=15 format=3 uid="uid://x300tatfo4q3"]
 
 [ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="1_3oadf"]
 [ext_resource type="Texture2D" uid="uid://d3pxd7f3mgm11" path="res://assets/honeycomb_atlas.png" id="2_81eqc"]
@@ -47,6 +47,12 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 1600, 8, 0, 0, 0, 0, 1600, 1208, 0, 0, 0, 0, 8, 1216, 0, 0, 0, 0, 0, 8)
 }
 point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_7h2eh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 1200, 0, 0, 0, 0, 0, 8)
+}
+point_count = 2
 
 [node name="LevelContainer" type="MarginContainer"]
 anchors_preset = 15
@@ -187,6 +193,13 @@ position = Vector2(0, 8)
 [node name="BeeTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_7h2eh")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(0, 1200)
+rotation = -1.5708
 
 [connection signal="pressed" from="LevelUI/RestartButtonContainer/RestartButton" to="LevelUI" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="LevelUI/MenuButtonContainer/MenuButton" to="LevelUI" method="_on_menu_button_pressed"]

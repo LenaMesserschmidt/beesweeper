@@ -49,10 +49,9 @@ func _on_menu_button_pressed():
 
 
 func _on_bee_timer_timeout():
-	print("Spawn bee")
 	var bee = bee_scene.instantiate()
 	
-	var bee_spawn_location = get_node("../BeePath/BeeSpawnLocation")
+	var bee_spawn_location = get_node("../Path2D/PathFollow2D")
 	bee_spawn_location.progress_ratio = randf()
 	
 	var direction = bee_spawn_location.rotation + PI / 2

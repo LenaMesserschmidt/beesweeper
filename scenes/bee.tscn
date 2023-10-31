@@ -1,17 +1,17 @@
 [gd_scene load_steps=6 format=3 uid="uid://br0y6b3yxxkub"]
 
-[ext_resource type="Texture2D" uid="uid://y272lom1qqxr" path="res://assets/enemyWalking_1.png" id="1_u5guu"]
 [ext_resource type="Script" path="res://scenes/bee.gd" id="1_wchi3"]
-[ext_resource type="Texture2D" uid="uid://xuarv4oqdlvq" path="res://assets/enemyWalking_2.png" id="2_ywqmw"]
+[ext_resource type="Texture2D" uid="uid://urnqmlupuwu0" path="res://assets/Bee_flying_1.png" id="2_orr6t"]
+[ext_resource type="Texture2D" uid="uid://q62w7xdgom4q" path="res://assets/Bee_flying_2.png" id="3_6k438"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_urakt"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_u5guu")
+"texture": ExtResource("2_orr6t")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_ywqmw")
+"texture": ExtResource("3_6k438")
 }],
 "loop": true,
 "name": &"default",
@@ -28,7 +28,9 @@ gravity_scale = 2.66454e-15
 script = ExtResource("1_wchi3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.075, 0.075)
 sprite_frames = SubResource("SpriteFrames_urakt")
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
