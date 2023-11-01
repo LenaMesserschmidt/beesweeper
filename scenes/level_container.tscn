@@ -80,7 +80,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="HoneycombGrid" type="TileMap" parent="MarginContainer/CenterContainer"]
-position = Vector2(-120, -80)
 tile_set = SubResource("TileSet_rgycn")
 format = 2
 script = ExtResource("3_xhg5j")
