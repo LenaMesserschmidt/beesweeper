@@ -2,6 +2,7 @@ extends HBoxContainer
 
 class_name LevelUI
 
+@export var bee_scene: PackedScene
 @onready var grub_count_label = %GrubCountLabel
 @onready var timer_label = %TimerLabel
 #@onready var game_status_button = %GameStatusButton
@@ -45,3 +46,22 @@ func _on_restart_button_pressed():
 func _on_menu_button_pressed():
 	var menu_scene = "res://scenes/menu.tscn"
 	get_tree().change_scene_to_file(menu_scene)
+
+
+func _on_bee_timer_timeout():
+	var bee = bee_scene.instantiate()
+	
+	var bee_spawn_location = get_node("../Path2D/PathFollow2D")
+	bee_spawn_location.progress_ratio = randf()
+	
+	var direction = bee_spawn_location.rotation + PI / 2
+	
+	bee.position = bee_spawn_location.position
+	
+	direction += randf_range(-PI / 4, PI / 4)
+	bee.rotation = direction
+	
+	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+	bee.linear_velocity = velocity.rotated(direction)
+	
+	add_child(bee)

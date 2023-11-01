@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://niyo4yey1sfx"
-path="res://.godot/imported/button_cleared.png-a4e19b11d6748af642e363149c51c5fe.ctex"
+uid="uid://urnqmlupuwu0"
+path="res://.godot/imported/Bee_flying_1.png-d138452dcd787affed0ba613f4e4ccf9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/button_cleared.png"
-dest_files=["res://.godot/imported/button_cleared.png-a4e19b11d6748af642e363149c51c5fe.ctex"]
+source_file="res://assets/Bee_flying_1.png"
+dest_files=["res://.godot/imported/Bee_flying_1.png-d138452dcd787affed0ba613f4e4ccf9.ctex"]
 
 [params]
 

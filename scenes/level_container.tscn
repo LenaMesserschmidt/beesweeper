@@ -1,11 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://x300tatfo4q3"]
+[gd_scene load_steps=15 format=3 uid="uid://x300tatfo4q3"]
 
 [ext_resource type="Texture2D" uid="uid://tincsg00r8v7" path="res://assets/Background.png" id="1_3oadf"]
 [ext_resource type="Texture2D" uid="uid://d3pxd7f3mgm11" path="res://assets/honeycomb_atlas.png" id="2_81eqc"]
 [ext_resource type="Script" path="res://scenes/HoneycombGrid.gd" id="3_xhg5j"]
 [ext_resource type="Script" path="res://scripts/LevelUI.gd" id="4_5tfux"]
 [ext_resource type="PackedScene" uid="uid://ds2nfpgplfthl" path="res://scenes/game_state_manager.tscn" id="5_qa1fl"]
+[ext_resource type="Texture2D" uid="uid://cmsv0ga7uvji6" path="res://assets/Button_short_default.png" id="6_8lece"]
 [ext_resource type="Script" path="res://scripts/game_state_manager.gd" id="6_uj883"]
+[ext_resource type="Texture2D" uid="uid://bkgg84oq25irf" path="res://assets/Button_short_pressed.png" id="7_33rxe"]
+[ext_resource type="PackedScene" uid="uid://br0y6b3yxxkub" path="res://scenes/bee.tscn" id="7_uy08c"]
+[ext_resource type="FontFile" uid="uid://bwxc82cyjwxx1" path="res://assets/PressStart2P-vaV7 Kopie.ttf" id="8_cqk8j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y7a3w"]
 texture = ExtResource("2_81eqc")
@@ -38,6 +42,18 @@ custom_data_layer_0/name = "has_grub"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_y7a3w")
 
+[sub_resource type="Curve2D" id="Curve2D_7mavr"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 1600, 8, 0, 0, 0, 0, 1600, 1208, 0, 0, 0, 0, 8, 1216, 0, 0, 0, 0, 0, 8)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_7h2eh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 1200, 0, 0, 0, 0, 0, 8)
+}
+point_count = 2
+
 [node name="LevelContainer" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,7 +80,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="HoneycombGrid" type="TileMap" parent="MarginContainer/CenterContainer"]
-position = Vector2(-120, -80)
 tile_set = SubResource("TileSet_rgycn")
 format = 2
 script = ExtResource("3_xhg5j")
@@ -73,7 +88,9 @@ script = ExtResource("3_xhg5j")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
+theme_override_constants/separation = 20
 script = ExtResource("4_5tfux")
+bee_scene = ExtResource("7_uy08c")
 
 [node name="GrubsCount" type="TextureRect" parent="LevelUI"]
 custom_minimum_size = Vector2(100, 50)
@@ -97,14 +114,60 @@ offset_right = 43.0
 offset_bottom = 26.0
 text = "Time:"
 
-[node name="RestartButton" type="Button" parent="LevelUI"]
+[node name="RestartButtonContainer" type="MarginContainer" parent="LevelUI"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="RestartButton" type="TextureButton" parent="LevelUI/RestartButtonContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+texture_normal = ExtResource("6_8lece")
+texture_pressed = ExtResource("7_33rxe")
+
+[node name="Label" type="Label" parent="LevelUI/RestartButtonContainer/RestartButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -13.5
+offset_right = 84.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_cqk8j")
+theme_override_font_sizes/font_size = 24
 text = "Restart"
 
-[node name="MenuButton" type="Button" parent="LevelUI"]
+[node name="MenuButtonContainer" type="MarginContainer" parent="LevelUI"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="MenuButton" type="TextureButton" parent="LevelUI/MenuButtonContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+texture_normal = ExtResource("6_8lece")
+texture_pressed = ExtResource("7_33rxe")
+
+[node name="Label" type="Label" parent="LevelUI/MenuButtonContainer/MenuButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -13.5
+offset_right = 108.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_cqk8j")
+theme_override_font_sizes/font_size = 24
 text = "Main Menu"
 
 [node name="GameStateManager" parent="." node_paths=PackedStringArray("grid", "ui") instance=ExtResource("5_qa1fl")]
@@ -115,6 +178,24 @@ ui = NodePath("../LevelUI")
 [node name="Timer" type="Timer" parent="GameStateManager"]
 autostart = true
 
-[connection signal="pressed" from="LevelUI/RestartButton" to="LevelUI" method="_on_restart_button_pressed"]
-[connection signal="pressed" from="LevelUI/MenuButton" to="LevelUI" method="_on_menu_button_pressed"]
+[node name="BeePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_7mavr")
+
+[node name="BeeSpawnLocation" type="PathFollow2D" parent="BeePath"]
+position = Vector2(0, 8)
+
+[node name="BeeTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_7h2eh")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(0, 1200)
+rotation = -1.5708
+
+[connection signal="pressed" from="LevelUI/RestartButtonContainer/RestartButton" to="LevelUI" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="LevelUI/MenuButtonContainer/MenuButton" to="LevelUI" method="_on_menu_button_pressed"]
 [connection signal="timeout" from="GameStateManager/Timer" to="GameStateManager" method="_on_timer_timeout"]
+[connection signal="timeout" from="BeeTimer" to="LevelUI" method="_on_bee_timer_timeout"]
