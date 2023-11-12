@@ -22,15 +22,17 @@ func set_timer_count(timer_count: int):
 	timer_label.text = timer_string
 
 func game_won():
-	pass
+	$GameEndLabel.text = "You win!"
+	$GameEndLabel.show()
 
 func game_lost():
-	pass
+	$GameEndLabel.text = "You lost!"
+	$GameEndLabel.show()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$GameEndLabel.hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,3 +67,4 @@ func _on_bee_timer_timeout():
 	bee.linear_velocity = velocity.rotated(direction)
 	
 	add_child(bee)
+

@@ -13,10 +13,9 @@ func _process(delta):
 
 
 func _on_new_game_button_pressed():
-	print("New Game")
 	var level_scene = "res://scenes/level_container.tscn"
 	get_tree().change_scene_to_file(level_scene)
 
 
 func _on_settings_button_pressed():
-	print("Settings")
+	pass
