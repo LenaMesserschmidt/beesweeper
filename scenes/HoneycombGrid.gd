@@ -160,7 +160,7 @@ func place_flag(cell_coord: Vector2i):
 		
 		flags_placed += 1
 		if cell_has_grub:
-			set_tile_cell(cell_coord, "FLAG", 1)
+			set_tile_cell(cell_coord, "FLAG", 2)
 		else:
 			set_tile_cell(cell_coord, "FLAG")
 		cells_with_flags.append(cell_coord)
