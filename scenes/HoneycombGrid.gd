@@ -32,6 +32,8 @@ var cells_with_flags = []
 var flags_placed = 0
 var cells_checked_recursively = []
 var is_game_finished = false
+var mouse_hold = 0
+var placed_flag = false
 
 func _ready():
 	clear_layer(DEFAULT_LAYER)
@@ -43,18 +45,24 @@ func _ready():
 	
 	place_grubs()
 
-func _input(event: InputEvent):
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
 	if is_game_finished:
 		return
-		
-	if !(event is InputEventMouseButton) || event.pressed:
-		return
 	
-	var clicked_cell_coord = local_to_map(get_local_mouse_position())
-	
-	if event.button_index == 1:
-		on_cell_clicked(clicked_cell_coord)
-	elif event.button_index == 2:
+	if Input.is_action_pressed('mouse_left'):
+		mouse_hold += delta
+		if (mouse_hold > 0.5) and not placed_flag:
+			place_flag(local_to_map(get_local_mouse_position()))
+			placed_flag = true
+	elif Input.is_action_just_released('mouse_left'):
+		if mouse_hold <= 0.5:
+			var clicked_cell_coord = local_to_map(get_local_mouse_position())
+			on_cell_clicked(clicked_cell_coord)
+		mouse_hold = 0
+		placed_flag = false
+	elif Input.is_action_just_pressed("mouse_right"):
+		var clicked_cell_coord = local_to_map(get_local_mouse_position())
 		place_flag(clicked_cell_coord)
 
 func on_cell_clicked(cell_coord: Vector2i):
@@ -62,14 +70,12 @@ func on_cell_clicked(cell_coord: Vector2i):
 		lose(cell_coord)
 		return
 	
+	if cells_with_flags.has(cell_coord):
+		return
+	
 	cells_checked_recursively.append(cell_coord)
 	
 	handle_cells(cell_coord)
-	
-	if cells_with_flags.has(cell_coord):
-		flags_placed -= 1
-		flag_change.emit(flags_placed)
-		cells_with_flags.erase(cell_coord)
 
 func handle_cells(cell_coord: Vector2i):
 	var tile_data = get_cell_tile_data(DEFAULT_LAYER, cell_coord)
@@ -93,10 +99,6 @@ func handle_cells(cell_coord: Vector2i):
 	else:
 		set_tile_cell(cell_coord, "%d" % grub_count)
 	
-	if cells_with_flags.has(cell_coord):
-		flags_placed -= 1
-		flag_change.emit(flags_placed)
-		cells_with_flags.erase(cell_coord)
 
 func handle_surrounding_cell(cell_coord: Vector2i):
 	if cells_checked_recursively.has(cell_coord):
@@ -166,7 +168,7 @@ func place_flag(cell_coord: Vector2i):
 		
 		flags_placed += 1
 		if cell_has_grub:
-			set_tile_cell(cell_coord, "FLAG", 1)
+			set_tile_cell(cell_coord, "FLAG", 2)
 		else:
 			set_tile_cell(cell_coord, "FLAG")
 		cells_with_flags.append(cell_coord)
@@ -185,8 +187,3 @@ func place_flag(cell_coord: Vector2i):
 func win():
 	is_game_finished = true
 	game_won.emit()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
